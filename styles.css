@@ -1,0 +1,267 @@
+:root {
+  --bg: #160a96;
+  --panel: #0f0772;
+  --card: #1b1088;
+  --line: #3226a6;
+  --ink: #f2f1ee;
+  --ink2: #c3bff0;
+  --ink3: #9590d6;
+  /* Colores de la Liga MX */
+  --mx-rojo: #e8392a;
+  --mx-rojo-osc: #a51d24;
+  --mx-verde: #2f9a48;
+  --mx-lima: #c0d72f;
+  --mx-gris: #8a8d93;
+  --accent: var(--mx-rojo);
+  --accent-soft: rgba(232, 57, 42, .16);
+  --good: var(--mx-lima);
+  --bad: #e5484d;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgba(232, 57, 42, .14), transparent 60%),
+    radial-gradient(900px 420px at 100% -10%, rgba(47, 154, 72, .14), transparent 60%),
+    var(--bg);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.45;
+  padding: 0 16px 32px;
+}
+
+/* ---------- Encabezado ---------- */
+.hero { max-width: 1240px; margin: 0 auto; padding: 36px 0 24px; position: relative; }
+.hero::after {
+  content: ""; display: block; height: 4px; border-radius: 2px; margin-top: 24px;
+  background: linear-gradient(90deg, var(--mx-gris) 0 20%, var(--mx-rojo) 20% 50%, var(--mx-verde) 50% 80%, var(--mx-gris) 80%);
+}
+.marca { display: flex; align-items: center; gap: 20px; }
+.logo { width: 96px; height: auto; flex: none; filter: drop-shadow(0 4px 14px rgba(0,0,0,.45)); }
+.k-rojo { color: #ff7266; }
+.k-verde { color: var(--mx-lima); }
+@media (max-width: 520px) {
+  .marca { gap: 14px; }
+  .logo { width: 64px; }
+}
+.kicker { color: var(--ink2); font-weight: 600; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; }
+h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 900; letter-spacing: -1px; line-height: 1.05; margin: 8px 0 12px; }
+.sub { color: var(--ink2); max-width: 680px; font-size: 16px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.meta { color: var(--ink3); font-size: 13px; margin-top: 12px; min-height: 18px; }
+
+.btn {
+  font: inherit; font-weight: 700; font-size: 15px;
+  padding: 11px 18px; border-radius: 12px;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); cursor: pointer;
+  transition: background .15s, border-color .15s, transform .05s;
+}
+.btn:hover { border-color: var(--ink3); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: linear-gradient(135deg, var(--mx-rojo), var(--mx-rojo-osc)); border-color: var(--mx-rojo); color: #fff; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn:focus-visible, .pick button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Layout ---------- */
+.layout {
+  max-width: 1240px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 20px;
+  align-items: start;
+}
+@media (max-width: 920px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 20px;
+}
+.panel-head { margin-bottom: 14px; }
+h2 { font-size: 20px; font-weight: 800; }
+h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--ink2); }
+.hint { color: var(--ink3); font-size: 13px; margin-top: 2px; }
+
+/* ---------- Partidos ---------- */
+.jornada { margin-top: 18px; }
+.jornada:first-child { margin-top: 0; }
+.jornada-title {
+  border-left: 3px solid var(--mx-verde); padding-left: 8px;
+  font-size: 12px; font-weight: 700; color: var(--ink3);
+  text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px;
+}
+.match {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 12px; background: var(--card);
+  margin-bottom: 6px; border: 1px solid transparent;
+}
+.match.picked { border-color: rgba(47, 154, 72, .55); }
+.team { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; min-width: 0; }
+.team span.n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team.away { justify-content: flex-end; text-align: right; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.escudo {
+  width: 28px; height: 28px; flex: none; border-radius: 50%;
+  background: #f2f1ee; display: grid; place-items: center;
+}
+.escudo img { width: 22px; height: 22px; object-fit: contain; display: block; }
+.escudo.sin-img { width: 10px; height: 10px; background: var(--c); }
+.team.lose .escudo { opacity: .55; }
+.llave .escudo { width: 26px; height: 26px; }
+.team.win { color: var(--ink); }
+.team.lose { color: var(--ink3); }
+
+.pick { display: flex; gap: 4px; }
+.pick button {
+  font: inherit; font-weight: 800; font-size: 13px;
+  width: 34px; height: 32px; border-radius: 8px;
+  background: transparent; color: var(--ink2);
+  border: 1px solid var(--line); cursor: pointer;
+}
+.pick button:hover { border-color: var(--ink3); color: var(--ink); }
+.pick button[aria-pressed="true"] { background: var(--mx-verde); border-color: var(--mx-verde); color: #fff; }
+.score { font-weight: 800; font-size: 15px; color: var(--accent); text-align: center; min-width: 34px; }
+.sim-score { display: block; font-size: 11px; color: var(--ink3); text-align: center; margin-top: 2px; font-weight: 600; }
+
+/* ---------- Tabla ---------- */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+th {
+  font-size: 12px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 1px;
+  text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line);
+}
+td { padding: 9px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th.c, td.c { text-align: center; }
+th.r, td.r { text-align: right; }
+td.pos { color: var(--ink3); font-weight: 700; width: 32px; }
+td.eq { font-weight: 600; }
+td.eq .team { font-size: 15px; }
+td.pts { font-weight: 800; }
+tr.corte td { border-bottom: 2px dashed var(--mx-rojo); }
+tr.fuera td.eq, tr.fuera td.pts { color: var(--ink2); }
+
+.prob { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 104px; }
+.prob .bar { width: 52px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.prob .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--mx-verde), var(--mx-lima)); border-radius: 3px; }
+.prob b { min-width: 46px; text-align: right; font-weight: 700; }
+.prob.zero b { color: var(--ink3); font-weight: 500; }
+.prob.full b { color: var(--good); }
+
+.legend-corte { color: var(--ink3); font-size: 12px; margin-top: 10px; }
+
+/* ---------- Liguilla ---------- */
+.liguilla { max-width: 1240px; margin: 20px auto 0; }
+.lig-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+
+/* Escritorio: 4 columnas (cuartos · semis · final · campeón) */
+.llave-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, .85fr);
+}
+.ronda { display: flex; flex-direction: column; min-width: 0; }
+.ronda h3 { border-left: 3px solid var(--mx-rojo); padding-left: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--ink3); margin-bottom: 10px; }
+.series { display: flex; flex-direction: column; justify-content: space-around; gap: 10px; flex: 1; }
+
+.serie {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 8px 10px 10px; min-width: 0;
+}
+.serie.es-final { border-color: var(--mx-rojo); box-shadow: 0 0 0 1px rgba(232,57,42,.25); }
+.s-head, .s-row {
+  display: grid; align-items: center; gap: 6px;
+  grid-template-columns: 16px minmax(0, 1fr) 26px 26px 34px;
+}
+.s-head { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2px; }
+.s-head span:nth-child(n+3) { text-align: center; }
+.s-row { padding: 5px 0; font-variant-numeric: tabular-nums; }
+.s-row + .s-row { border-top: 1px solid var(--line); }
+.s-row .seed { color: var(--ink3); font-weight: 700; font-size: 12px; text-align: center; }
+.s-row .team { font-size: 14px; gap: 7px; }
+.s-row .escudo { width: 24px; height: 24px; }
+.s-row .escudo img { width: 19px; height: 19px; }
+.s-row .g { text-align: center; color: var(--ink2); font-size: 14px; }
+.s-row .g.agg { font-weight: 800; color: var(--ink); background: var(--bg); border-radius: 6px; padding: 2px 0; }
+.s-row.gana .team { color: var(--ink); font-weight: 700; }
+.s-row.gana .g.agg { background: rgba(47, 154, 72, .22); color: var(--mx-lima); }
+.s-row.pierde .team { color: var(--ink3); }
+.s-row.pierde .escudo { opacity: .55; }
+.s-row.pierde .g.agg { color: var(--ink3); }
+.s-note { font-size: 11px; color: var(--ink3); margin-top: 6px; line-height: 1.3; }
+
+.campeon {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--mx-rojo), var(--mx-lima) 55%, var(--mx-verde)) border-box;
+  background-color: var(--card);
+  border: 2px solid transparent; border-radius: 14px;
+  box-shadow: inset 0 60px 80px -40px rgba(192, 215, 47, .12); padding: 22px 14px; gap: 10px;
+}
+.escudo.grande { width: 92px; height: 92px; }
+.escudo.grande img { width: 72px; height: 72px; }
+.escudo.grande.sin-img { width: 40px; height: 40px; }
+.c-nombre { font-size: 26px; font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
+.c-sub { font-size: 12px; color: var(--ink2); max-width: 200px; }
+
+.vacio {
+  grid-column: 1 / -1; background: var(--card); border: 1px dashed var(--line); border-radius: 12px;
+  padding: 28px 18px; text-align: center; color: var(--ink2);
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+
+.lig-prob { margin-top: 26px; }
+.lig-prob h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; color: var(--ink); font-size: 16px; }
+.lig-prob h3 .hint { font-weight: 500; }
+#prob-liguilla td.eq .team { font-size: 15px; }
+
+/* Tablet: cuartos y semis lado a lado; final y campeón abajo */
+@media (max-width: 1100px) {
+  .llave-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .r-cuartos .series { display: grid; grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Celular: todo en una columna, en orden de rondas */
+@media (max-width: 640px) {
+  .llave-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .lig-head .btn { width: 100%; }
+  .series { gap: 8px; }
+  .campeon { padding: 20px 12px; }
+  .c-nombre { font-size: 24px; }
+}
+
+/* ---------- Modelo ---------- */
+.modelo { max-width: 1240px; margin: 20px auto 0; }
+.modelo p { color: var(--ink2); margin-top: 10px; max-width: 860px; }
+.modelo b { color: var(--ink); }
+.slider { display: block; margin-top: 16px; max-width: 520px; }
+.slider span { display: block; font-size: 14px; color: var(--ink2); }
+.slider input { width: 100%; margin: 10px 0 4px; accent-color: var(--mx-verde); }
+.slider small { color: var(--ink3); font-size: 12px; }
+
+.foot {
+  max-width: 1240px; margin: 24px auto 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  color: var(--ink3); font-size: 13px;
+}
+.foot b { color: var(--ink); }
+
+@media (max-width: 520px) {
+  .panel { padding: 14px; }
+  .match { padding: 8px 10px; gap: 6px; }
+  .team { font-size: 14px; gap: 6px; }
+  .escudo { width: 24px; height: 24px; }
+  .escudo img { width: 19px; height: 19px; }
+  .pick button { width: 30px; height: 30px; }
+  table { font-size: 14px; }
+  td, th { padding: 8px 5px; }
+  .prob { min-width: 0; }
+  .prob .bar { display: none; }
+  .hide-sm { display: none; }
+}
+
+/* Mientras se recalculan las 10,000 simulaciones */
+#tabla, .liguilla { transition: opacity .15s; }
+.calculando #tabla, .calculando .liguilla { opacity: .55; }

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador Apertura 2026 · Liga MX</title>
+  <meta name="description" content="Elige los resultados que faltan del Apertura 2026 y mira cómo queda la tabla y quién entra a la Liguilla.">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#160a96">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="marca">
+      <img class="logo" src="logo-ligamx.png" alt="Liga MX" width="253" height="200">
+      <div>
+        <p class="kicker">Liga MX · <span class="k-rojo">Apertura</span> <span class="k-verde">2026</span></p>
+        <h1>Simulador del torneo</h1>
+      </div>
+    </div>
+    <p class="sub">Elige quién gana cada partido que falta, o deja que el modelo lo juegue 10,000 veces. La tabla y las probabilidades se actualizan al instante.</p>
+    <div class="actions">
+      <button id="btn-una" class="btn primary">Simular un final posible</button>
+      <button id="btn-reset" class="btn">Reiniciar</button>
+    </div>
+    <p class="meta" id="meta"></p>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-labelledby="t-partidos">
+      <div class="panel-head">
+        <h2 id="t-partidos">Partidos que faltan</h2>
+        <p class="hint">L = gana local · E = empate · V = gana visita</p>
+      </div>
+      <div id="partidos"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-tabla">
+      <div class="panel-head">
+        <h2 id="t-tabla">Tabla proyectada</h2>
+        <p class="hint" id="tabla-hint">Puntos actuales + tus resultados elegidos · % sobre 10,000 torneos</p>
+      </div>
+      <div class="table-wrap">
+        <table id="tabla">
+          <thead>
+            <tr>
+              <th class="c">#</th>
+              <th>Equipo</th>
+              <th class="c hide-sm">PJ</th>
+              <th class="c">Pts</th>
+              <th class="c">DG</th>
+              <th class="r">Liguilla</th>
+              <th class="r">Líder</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel liguilla" aria-labelledby="t-liguilla">
+    <div class="lig-head">
+      <div>
+        <h2 id="t-liguilla">Liguilla y campeón</h2>
+        <p class="hint">Cuartos 1 vs 8, 2 vs 7, 3 vs 6 y 4 vs 5 · Semis con reacomodo · Ida y vuelta, sin gol de visitante</p>
+      </div>
+      <button type="button" class="btn primary" data-accion="otra">Simular otra Liguilla</button>
+    </div>
+    <div id="llave" class="llave-grid"></div>
+
+    <div class="lig-prob">
+      <h3>¿Quién llega más lejos? <span class="hint">% sobre 10,000 torneos completos</span></h3>
+      <div class="table-wrap">
+        <table id="prob-liguilla">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th class="r hide-sm">Liguilla</th>
+              <th class="r">Semis</th>
+              <th class="r">Final</th>
+              <th class="r">Campeón</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel modelo">
+    <h2>¿Cómo funciona?</h2>
+    <p>Cada equipo tiene una <b>fuerza</b>: su diferencia de goles por partido. En cada partido sin elegir, el modelo genera los goles con una <b>distribución de Poisson</b>, con ventaja para el local (1.45 goles esperados contra 1.10 del visitante, ajustados por la fuerza de cada uno). Juega lo que falta del torneo 10,000 veces y cuenta cuántas veces cada equipo terminó entre los 8 primeros y en el primer lugar.</p>
+    <p>Desempate: puntos, luego diferencia de goles; si siguen iguales, al azar. Los resultados que eliges cuentan como 1-0 o 0-0 para la diferencia de goles. Es un modelo sencillo: no toma en cuenta lesiones, rachas ni rotaciones.</p>
+    <p><b>Liguilla:</b> los 8 primeros entran directo. Cada serie es a ida y vuelta y el mejor posicionado cierra en casa. En cuartos y semifinales, si el global queda empatado, avanza el mejor posicionado. En la final, si el global queda empatado, hay prórroga de 30 minutos y, si sigue igual, penales.</p>
+    <label class="slider">
+      <span>Peso de la fuerza de cada equipo: <b id="peso-val">0.30</b></span>
+      <input id="peso" type="range" min="0" max="0.8" step="0.05" value="0.30">
+      <small>0 = todos los partidos son volados · más alto = el favorito gana más seguido</small>
+    </label>
+  </section>
+
+  <footer class="foot">
+    <span><b>@elmaurienlared</b> · Hecho por Ing. Mauricio Muñoz Bravo</span>
+    <span id="datos-fecha"></span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
