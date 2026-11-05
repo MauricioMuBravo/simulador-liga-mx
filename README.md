@@ -3,7 +3,7 @@
 
 ¿Quién va a ser campeón del Apertura 2026? Este simulador juega lo que falta del torneo **10,000 veces en un segundo**. Tú eliges los resultados de los partidos que faltan, la tabla se acomoda en vivo y, con un solo botón, se arma toda la Liguilla hasta el campeón.
 
-🔗 **Pruébalo aquí:** https://mauriciomubravo.github.io/NOMBRE-DEL-REPO/
+🔗 **Pruébalo aquí:** [https://mauriciomubravo.github.io/NOMBRE-DEL-REPO/](https://mauriciomubravo.github.io/simulador-liga-mx/)
 
 ---
 
