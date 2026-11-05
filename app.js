@@ -1,12 +1,3 @@
-/*
- * Simulador del Apertura 2026 · Liga MX
- * El Mauri en la Red ⚽💻
- *
- * Modelo: fuerza = diferencia de goles por partido; goles con distribución de Poisson;
- * ventaja de local. Se juega lo que falta del torneo (y la Liguilla) 10,000 veces.
- * Para actualizar: cambia TABLA y PARTIDOS después de cada jornada.
- */
-
 const DATOS_FECHA = "Datos tras la Jornada 15 (2 de noviembre de 2026)";
 
 // pts = puntos, pj = partidos jugados, dg = diferencia de goles
@@ -279,13 +270,17 @@ function simularUnaLiguilla() {
 // ---------- Interfaz ----------
 const $ = sel => document.querySelector(sel);
 
-// Archivo del escudo: "Cruz Azul" -> escudos/cruz-azul.png
+// Carpeta donde están los escudos. Vacía = en la raíz del repositorio, junto a index.html.
+// Si algún día los mueves a una carpeta, ponle su nombre con diagonal al final, ej. "escudos/".
+const RUTA_ESCUDOS = "";
+
+// Archivo del escudo: "Cruz Azul" -> cruz-azul.png
 const slug = nombre => nombre.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, "-");
 
 // Escudo del equipo; si la imagen no carga, se muestra un punto con su color
 function escudoHTML(nombre, clase = "") {
   const color = COLORES[nombre] || "#888";
-  return `<span class="escudo ${clase}" style="--c:${color}"><img src="escudos/${slug(nombre)}.png" alt="" loading="lazy" onerror="this.parentNode.classList.add('sin-img');this.remove()"></span>`;
+  return `<span class="escudo ${clase}" style="--c:${color}"><img src="${RUTA_ESCUDOS}${slug(nombre)}.png" alt="" loading="lazy" onerror="this.parentNode.classList.add('sin-img');this.remove()"></span>`;
 }
 function equipoHTML(nombre, clase = "") {
   return `<span class="team ${clase}">${escudoHTML(nombre)}<span class="n">${nombre}</span></span>`;
